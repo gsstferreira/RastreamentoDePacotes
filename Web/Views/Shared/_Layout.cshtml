@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../Content/sb_admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- MetisMenu CSS -->
+    <link href="../Content/sb_admin/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="../Content/sb_admin/dist/css/sb-admin-2.css" rel="stylesheet">
+    <!-- Morris Charts CSS -->
+    <link href="../Content/sb_admin/vendor/morrisjs/morris.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="../Content/sb_admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand">Rastreamento de Pacotes 2018</a>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <a href="#"><i class="fa fa-user fa-fw"></i> Perfil</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Sair</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        @Html.Partial("MenuLateral")
+    </nav>
+
+    @RenderBody()
+
+    <!-- jQuery -->
+    <script src="../Content/sb_admin/vendor/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../Content/sb_admin/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../Content/sb_admin/vendor/metisMenu/metisMenu.min.js"></script>
+    <!-- Morris Charts JavaScript -->
+    <script src="../Content/sb_admin/vendor/raphael/raphael.min.js"></script>
+    <script src="../Content/sb_admin/vendor/morrisjs/morris.min.js"></script>
+    <script src="../Content/sb_admin/data/morris-data.js"></script>
+
+    <script src="../Content/sb_admin/dist/js/sb-admin-2.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
