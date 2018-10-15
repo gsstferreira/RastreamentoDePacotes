@@ -22,19 +22,14 @@ namespace Common.DBServices
             .Mappings(m => m.FluentMappings
             .Add<UsuarioMap>()
             .Add<EnderecoMap>()
-            .Add<EstacaoService>()
             .Add<VeiculoMap>()
             .Add<EmpresaMap>()
+            .Add<EstacaoMap>()
             );
             var session = _session.BuildConfiguration();
 
             if(!initGeral)
             {
-                var schemaExport = new SchemaExport(session);
-                schemaExport.Execute(false, true, true);
-                schemaExport.Drop(false, true);
-                schemaExport.Create(false, true);
-
                 var updater = new SchemaUpdate(session);
                 updater.Execute(true, true);
                 var ex = updater.Exceptions;
@@ -58,11 +53,6 @@ namespace Common.DBServices
 
             if (!initPacote)
             {
-                var schemaExport = new SchemaExport(session);
-                schemaExport.Execute(false, true, true);
-                schemaExport.Drop(false, true);
-                schemaExport.Create(false, true);
-
                 var updater = new SchemaUpdate(session);
                 updater.Execute(true, true);
                 var ex = updater.Exceptions;

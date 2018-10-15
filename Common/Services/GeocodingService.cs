@@ -14,16 +14,17 @@ namespace Common.Services
         private static readonly HttpClient client = new HttpClient();
         private static readonly JavaScriptSerializer serializer = new JavaScriptSerializer(); 
 
-        public static async Task<LatLng> obterCoordenadas(Endereco endereco)
+        public static LatLng obterCoordenadas(Endereco endereco)
         {
             string addr = "address=" + endereco.Logradouro + "+" + endereco.Numero + "+" + endereco.Bairro + "+" + endereco.Municipio;
             string key = "key=" + api_key;
 
             string url = google_url + addr + "&" + key;
 
-            var responseString = await client.GetStringAsync(url);
+            var responseString = client.GetStringAsync(url);
+            responseString.Wait();
 
-            var response = serializer.Deserialize<GeocodingResponse>(responseString);
+            var response = serializer.Deserialize<GeocodingResponse>(responseString.Result);
 
             if(response.status.Equals("OK"))
             {

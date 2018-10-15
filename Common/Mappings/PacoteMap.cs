@@ -24,6 +24,8 @@ namespace Common.Mappings
                 .Table("RotasPacote")
                 .ParentKeyColumn("PacoteId")
                 .ChildKeyColumn("RotaId")
+                .Not.LazyLoad()
+                .Inverse()
                 .Cascade.None();
         }
     }

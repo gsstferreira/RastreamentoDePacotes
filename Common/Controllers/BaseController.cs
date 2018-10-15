@@ -6,49 +6,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace Common.Controllers
 {
-    public class BaseController : Controller
+    public abstract class BaseController : Controller
     {
         protected Usuario AuthUser { get; set; }
 
+        protected static JavaScriptSerializer serializer = new JavaScriptSerializer();
+
         protected override void OnAuthorization(AuthorizationContext filterContext)
         {
-            string auth = filterContext.RequestContext.HttpContext.Request.Headers.Get("Authorization");
-            if (auth == null)
+            bool hasAllowAnonymous = filterContext.ActionDescriptor
+            .GetCustomAttributes(typeof(AllowAnonymousAttribute), false)
+            .Any();
+
+            if(hasAllowAnonymous)
             {
-                RequestResponse(filterContext, 401, "The request does not have an Authorization header.");
+                return;
             }
-            else
+            else if(filterContext.HttpContext.Request.Headers.Get("Authorization") == null)
             {
-                try
-                {
-                    AuthUser = UsuarioService.ObterPorId(new Guid(auth));
-
-                    if (AuthUser == null)
-                    {
-                        RequestResponse(filterContext, 403, "The Authorization header does not correspond to a valid user.");
-                    }
-                }
-                catch (Exception)
-                {
-                    RequestResponse(filterContext, 403, "The Authorization header is not in the correct format.");
-                }
+                throw new UnauthorizedAccessException();
             }
-
-        }
-
-        private void RequestResponse(AuthorizationContext Context, int HttpStatusCode, string message)
-        {
-            var resp = Context.RequestContext.HttpContext.Response;
-
-            resp.StatusCode = HttpStatusCode;
-            resp.StatusDescription = message;
-            resp.SuppressContent = true;
-
-            Context.Result = new ErrorController().Index();
-            Context.RequestContext.HttpContext.ApplicationInstance.CompleteRequest();
         }
     }
 }

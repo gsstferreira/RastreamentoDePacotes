@@ -1,4 +1,7 @@
 ﻿using Common.Controllers;
+using Common.DBServices;
+using Common.Models;
+using Common.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +12,13 @@ namespace APIRastreamento.Controllers
 {
     public class HomeController : BaseController 
     {
+        [AllowAnonymous]
         public ActionResult Index()
         {
-
-            Guid g = AuthUser.UsuarioId;
             ViewBag.Title = "Home Page";
+
+            PacoteService.ObterTodosPacotes();
+            EstacaoService.ObterTodasEstacoes();
 
             return View();
         }

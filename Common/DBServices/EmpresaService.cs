@@ -16,6 +16,7 @@ namespace Common.DBServices
             {
                 ISession session = NHibernateFactory.CreateSessionGeral().OpenSession();
                 session.SaveOrUpdate(Empresa);
+                session.Flush();
                 session.Close();
 
                 return true;

@@ -17,6 +17,7 @@ namespace Common.DBServices
 
                 ISession session = NHibernateFactory.CreateSessionPacote().OpenSession();
                 session.SaveOrUpdate(localizacao);
+                session.Flush();
                 session.Close();
 
                 return true;

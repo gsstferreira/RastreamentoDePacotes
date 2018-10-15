@@ -29,6 +29,7 @@ namespace Common.DBServices
             {
                 ISession sessionPacote = NHibernateFactory.CreateSessionPacote().OpenSession();
                 sessionPacote.SaveOrUpdate(rota);
+                sessionPacote.Flush();
                 sessionPacote.Close();
 
                 return true;
@@ -45,7 +46,7 @@ namespace Common.DBServices
             try
             {
                 ISession session = NHibernateFactory.CreateSessionPacote().OpenSession();
-                var rota = session.QueryOver<Rota>().Where(x => x.RotaId.Equals(RotaId)).SingleOrDefault();
+                var rota = session.QueryOver<Rota>().Where(x => x.RotaId == RotaId).SingleOrDefault();
 
                 session.Close();
 

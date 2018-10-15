@@ -18,7 +18,8 @@ namespace Common.Mappings
                 .Table("RotasPacote")
                 .ParentKeyColumn("RotaId")
                 .ChildKeyColumn("PacoteId")
-                .LazyLoad();
+                .Not.LazyLoad()
+                .Cascade.None();
 
             HasMany(x => x.AmostrasLocalizacao).KeyColumn("RotaId").Cascade.None();
         }

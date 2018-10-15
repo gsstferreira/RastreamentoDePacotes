@@ -9,7 +9,8 @@ namespace Common.Mappings
         {
             Id(x => x.VeiculoId).GeneratedBy.GuidComb();
             Map(x => x.RotaAtual);
-
+            Map(x => x.Modelo);
+            Map(x => x.Placa);
         }
     }
 }

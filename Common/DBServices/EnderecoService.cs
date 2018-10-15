@@ -31,7 +31,7 @@ namespace Common.DBServices
             try
             {
                 ISession session = NHibernateFactory.CreateSessionGeral().OpenSession();
-                var endereco = session.QueryOver<Endereco>().Where(x => x.EnderecoId.Equals(EnderecoId)).SingleOrDefault();
+                var endereco = session.QueryOver<Endereco>().Where(x => x.EnderecoId == EnderecoId).SingleOrDefault();
                 session.Close();
 
                 return endereco;
@@ -42,11 +42,11 @@ namespace Common.DBServices
             }
         }
 
-        public static bool SalvarEndereco(Endereco endereco)
+        public static Guid SalvarEndereco(Endereco endereco)
         {
             try
             {
-                if(endereco.EnderecoId == null)
+                if(endereco.EnderecoId == Guid.Empty)
                 {
                     var enderecoSimilar = ObterTodosEnderecos().Where(x => x.Latitude == endereco.Latitude)
                         .Where(x => x.Longitude == endereco.Longitude)
@@ -54,16 +54,17 @@ namespace Common.DBServices
 
                     if(enderecoSimilar != null)
                     {
-                        endereco.EnderecoId = enderecoSimilar.EnderecoId;
+                        return enderecoSimilar.EnderecoId;
                     }
                     else
                     {
                         ISession session = NHibernateFactory.CreateSessionGeral().OpenSession();
                         session.SaveOrUpdate(endereco);
+                        session.Flush();
                         session.Close();
-                    }
-                    return true;
 
+                        return endereco.EnderecoId;
+                    }
                 }
                 else
                 {
@@ -71,12 +72,12 @@ namespace Common.DBServices
                     session.SaveOrUpdate(endereco);
                     session.Close();
 
-                    return true;
+                    return endereco.EnderecoId;
                 }
             }
             catch (Exception)
             {
-                return false;
+                return Guid.Empty;
             }
         }
     }

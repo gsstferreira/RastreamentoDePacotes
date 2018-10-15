@@ -9,6 +9,6 @@ namespace Common.Models
     public class RespostaHttp
     {
         public virtual bool Ok { get; set; }
-        public virtual string Mensagem { get; set; }
+        public virtual dynamic Mensagem { get; set; }
     }
 }

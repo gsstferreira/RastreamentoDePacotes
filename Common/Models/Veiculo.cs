@@ -10,5 +10,7 @@ namespace Common.Models
     {
         public virtual Guid VeiculoId { get; set; }
         public virtual Guid RotaAtual { get; set; }
+        public virtual string Modelo { get; set; }
+        public virtual string Placa { get; set; }
     }
 }

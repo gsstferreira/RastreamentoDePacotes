@@ -28,7 +28,7 @@ namespace Common.DBServices
             try
             {
                 ISession session = NHibernateFactory.CreateSessionPacote().OpenSession();
-                var pacotes = session.QueryOver<Pacote>().Where(x => x.Remetente.Equals(UsuarioId)).List();
+                var pacotes = session.QueryOver<Pacote>().Where(x => x.Remetente == UsuarioId).List();
                 session.Close();
 
                 return pacotes;
@@ -44,7 +44,7 @@ namespace Common.DBServices
             try
             {
                 ISession session = NHibernateFactory.CreateSessionPacote().OpenSession();
-                var pacotes = session.QueryOver<Pacote>().Where(x => x.DestinatarioId.Equals(UsuarioId)).List();
+                var pacotes = session.QueryOver<Pacote>().Where(x => x.DestinatarioId == UsuarioId).List();
                 session.Close();
 
                 return pacotes;
@@ -60,7 +60,7 @@ namespace Common.DBServices
             try
             {
                 ISession session = NHibernateFactory.CreateSessionPacote().OpenSession();
-                var pacote = session.QueryOver<Pacote>().Where(x => x.PacoteId.Equals(PacoteId)).SingleOrDefault();
+                var pacote = session.QueryOver<Pacote>().Where(x => x.PacoteId ==  PacoteId).SingleOrDefault();
                 session.Close();
 
                 return pacote;
@@ -92,7 +92,9 @@ namespace Common.DBServices
             try
             {
                 ISession session = NHibernateFactory.CreateSessionPacote().OpenSession();
+
                 session.SaveOrUpdate(pacote);
+                session.Flush();
                 session.Close();
 
                 return true;

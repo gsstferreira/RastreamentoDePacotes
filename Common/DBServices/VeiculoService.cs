@@ -16,6 +16,7 @@ namespace Common.DBServices
             {
                 ISession session = NHibernateFactory.CreateSessionGeral().OpenSession();
                 session.SaveOrUpdate(Veiculo);
+                session.Flush();
                 session.Close();
 
                 return true;
@@ -47,7 +48,7 @@ namespace Common.DBServices
             try
             {
                 ISession session = NHibernateFactory.CreateSessionGeral().OpenSession();
-                var item = session.QueryOver<Veiculo>().Where(x => x.VeiculoId.Equals(VeiculoId)).SingleOrDefault();
+                var item = session.QueryOver<Veiculo>().Where(x => x.VeiculoId == VeiculoId).SingleOrDefault();
                 session.Close();
 
                 return item;
