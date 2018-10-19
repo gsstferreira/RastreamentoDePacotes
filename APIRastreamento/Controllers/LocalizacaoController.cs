@@ -7,30 +7,35 @@ using System.Web.Mvc;
 
 namespace APIRastreamento.Controllers
 {
-    public class LocalizacaoController : BaseController 
+    public class LocalizacaoController : BaseApiController 
     {
+        public LocalizacaoController():base()
+        {
+            _veiculoService.OpenSession();
+            _rotaService.OpenSession();
+            _localizacaoService.OpenSession();
+        }
+
         [HttpPost]
         public string PostarLocalizacao()
         {
             RespostaHttp resp = new RespostaHttp();
 
-            var body = RequestReaderService.ReadRequestBody(Request);
-
             try
             {
-                Guid VeiculoID = body.GetValueAs<Guid>("VeiculoId");
-                var veiculo = VeiculoService.ObterPorId(VeiculoID);
-                Rota rota = RotaService.ObterPorId(veiculo.RotaAtual);
+                Guid VeiculoID = _requestBody.GetValueAs<Guid>("VeiculoId");
+                var veiculo = _veiculoService.ObterPorId(VeiculoID);
+                Rota rota = _rotaService.ObterPorId(veiculo.RotaAtual);
 
                 var localizacao = new Localizacao
                 {
                     HorarioAmostra = DateTime.UtcNow,
-                    Latitude = body.GetValueAs<double>("Latitude"),
-                    Longitude = body.GetValueAs<double>("Longitude"),
+                    Latitude = _requestBody.GetValueAs<double>("Latitude"),
+                    Longitude = _requestBody.GetValueAs<double>("Longitude"),
                     Rota = rota
                 };
 
-                LocalizacaoService.SalvarLocalizacao(localizacao);
+                _localizacaoService.SalvarLocalizacao(localizacao);
 
                 resp.Ok = true;
                 resp.Mensagem = "Localização salva com sucesso.";
@@ -40,7 +45,7 @@ namespace APIRastreamento.Controllers
                 resp.Ok = false;
                 resp.Mensagem = "Ocorreu um erro ao processar a requisição. (500)";
             }
-            return serializer.Serialize(resp);
+            return Serialize(resp);
         }
     }
 }

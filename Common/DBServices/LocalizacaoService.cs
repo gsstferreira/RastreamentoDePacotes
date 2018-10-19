@@ -8,17 +8,21 @@ using System.Threading.Tasks;
 
 namespace Common.DBServices
 {
-    public abstract class LocalizacaoService
+    public class LocalizacaoService : IDisposable
     {
-        public static bool SalvarLocalizacao(Localizacao localizacao)
+        private ISession session;
+
+        public LocalizacaoService OpenSession()
+        {
+            session = NHibernateFactory.GetSessionFactoryPacote().OpenSession();
+            return this;
+        }
+        public bool SalvarLocalizacao(Localizacao localizacao)
         {
             try
             {
-
-                ISession session = NHibernateFactory.CreateSessionPacote().OpenSession();
                 session.SaveOrUpdate(localizacao);
                 session.Flush();
-                session.Close();
 
                 return true;
             }
@@ -28,15 +32,11 @@ namespace Common.DBServices
             }
         }
 
-        public static IEnumerable<Localizacao> ObterTodasLocalizacoes()
+        public IEnumerable<Localizacao> ObterTodasLocalizacoes()
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionPacote().OpenSession();
-                var localizacoes = session.QueryOver<Localizacao>().List();
-                session.Close();
-
-                return localizacoes;
+                return session.QueryOver<Localizacao>().List();
             }
             catch (Exception)
             {
@@ -44,19 +44,23 @@ namespace Common.DBServices
             }
         }
 
-        public static Localizacao ObterPorId(Guid LocalizacaoId)
+        public Localizacao ObterPorId(Guid LocalizacaoId)
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionPacote().OpenSession();
-                var item = session.QueryOver<Localizacao>().Where(x => x.LocalizacaoId.Equals(LocalizacaoId)).SingleOrDefault();
-                session.Close();
-
-                return item;
+                return session.QueryOver<Localizacao>().Where(x => x.LocalizacaoId.Equals(LocalizacaoId)).SingleOrDefault();
             }
             catch (Exception)
             {
                 return null;
+            }
+        }
+
+        public void Dispose()
+        {
+            if (session != null)
+            {
+                session.Close();
             }
         }
     }

@@ -80,7 +80,7 @@
     <Compile Include="DBServices\VeiculoService.cs" />
     <Compile Include="DBServices\EstacaoService.cs" />
     <Compile Include="DBServices\LocalizacaoService.cs" />
-    <Compile Include="DBServices\NHibernateFactory.cs" />
+    <Compile Include="DBServices\NHibernateFactory\NHibernateFactory.cs" />
     <Compile Include="DBServices\PacoteService.cs" />
     <Compile Include="DBServices\RotaService.cs" />
     <Compile Include="DBServices\UsuarioService.cs" />

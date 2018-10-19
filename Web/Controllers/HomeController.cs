@@ -11,9 +11,6 @@ namespace AplicacaoArduino.Controllers
         {
             ViewBag.Title = "Home Page";
 
-            PacoteService.ObterTodosPacotes();
-            UsuarioService.ObterTodosUsuarios();
-
             return View();
         }
 

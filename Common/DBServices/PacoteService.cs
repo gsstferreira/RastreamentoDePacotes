@@ -5,17 +5,20 @@ using System.Collections.Generic;
 
 namespace Common.DBServices
 {
-    public abstract class PacoteService
+    public class PacoteService : IDisposable
     {
-        public static IEnumerable<Pacote> ObterTodosPacotes()
+        private ISession session;
+
+        public PacoteService OpenSession()
+        {
+            session = NHibernateFactory.GetSessionFactoryPacote().OpenSession();
+            return this;
+        }
+        public IEnumerable<Pacote> ObterTodosPacotes()
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionPacote().OpenSession();
-                var pacotes = session.QueryOver<Pacote>().List();
-                session.Close();
-
-                return pacotes;
+                return session.QueryOver<Pacote>().List();
             }
             catch(Exception)
             {
@@ -23,15 +26,11 @@ namespace Common.DBServices
             }
         }
 
-        public static IEnumerable<Pacote> ObterPorRemetente(Guid UsuarioId)
+        public IEnumerable<Pacote> ObterPorRemetente(Guid UsuarioId)
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionPacote().OpenSession();
-                var pacotes = session.QueryOver<Pacote>().Where(x => x.Remetente == UsuarioId).List();
-                session.Close();
-
-                return pacotes;
+                return session.QueryOver<Pacote>().Where(x => x.Remetente == UsuarioId).List();
             }
             catch (Exception)
             {
@@ -39,15 +38,11 @@ namespace Common.DBServices
             }
         }
 
-        public static IEnumerable<Pacote> ObterPorDestinatario(Guid UsuarioId)
+        public IEnumerable<Pacote> ObterPorDestinatario(Guid UsuarioId)
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionPacote().OpenSession();
-                var pacotes = session.QueryOver<Pacote>().Where(x => x.DestinatarioId == UsuarioId).List();
-                session.Close();
-
-                return pacotes;
+                return session.QueryOver<Pacote>().Where(x => x.DestinatarioId == UsuarioId).List();
             }
             catch (Exception)
             {
@@ -55,15 +50,11 @@ namespace Common.DBServices
             }
         }
 
-        public static Pacote ObterPorId(Guid PacoteId)
+        public Pacote ObterPorId(Guid PacoteId)
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionPacote().OpenSession();
-                var pacote = session.QueryOver<Pacote>().Where(x => x.PacoteId ==  PacoteId).SingleOrDefault();
-                session.Close();
-
-                return pacote;
+                return session.QueryOver<Pacote>().Where(x => x.PacoteId ==  PacoteId).SingleOrDefault();
             }
             catch (Exception)
             {
@@ -71,15 +62,11 @@ namespace Common.DBServices
             }
         }
 
-        public static Pacote ObterPorTag(Guid TagRFID)
+        public Pacote ObterPorTag(Guid TagRFID)
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionPacote().OpenSession();
-                var pacote = session.QueryOver<Pacote>().Where(x => x.TagRFID.Equals(TagRFID)).SingleOrDefault();
-                session.Close();
-
-                return pacote;
+                return session.QueryOver<Pacote>().Where(x => x.TagRFID.Equals(TagRFID)).SingleOrDefault();
             }
             catch (Exception)
             {
@@ -87,21 +74,26 @@ namespace Common.DBServices
             }
         }
 
-        public static bool SalvarPacote(Pacote pacote)
+        public bool SalvarPacote(Pacote pacote)
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionPacote().OpenSession();
-
                 session.SaveOrUpdate(pacote);
                 session.Flush();
-                session.Close();
 
                 return true;
             }
             catch (Exception)
             {
                 return false;
+            }
+        }
+
+        public void Dispose()
+        {
+            if (session != null)
+            {
+                session.Close();
             }
         }
     }

@@ -8,17 +8,20 @@ using System.Threading.Tasks;
 
 namespace Common.DBServices
 {
-    public abstract class EnderecoService
+    public class EnderecoService : IDisposable
     {
-        public static IEnumerable<Endereco> ObterTodosEnderecos()
+        private ISession session;
+        public EnderecoService OpenSession()
+        {
+            session = NHibernateFactory.GetSessionFactoryGeral().OpenSession();
+            return this;
+        }
+
+        public IEnumerable<Endereco> ObterTodosEnderecos()
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionGeral().OpenSession();
-                var enderecos = session.QueryOver<Endereco>().List();
-                session.Close();
-
-                return enderecos;
+                return session.QueryOver<Endereco>().List();
             }
             catch (Exception)
             {
@@ -26,15 +29,11 @@ namespace Common.DBServices
             }
         }
 
-        public static Endereco ObterPorId(Guid EnderecoId)
+        public Endereco ObterPorId(Guid EnderecoId)
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionGeral().OpenSession();
-                var endereco = session.QueryOver<Endereco>().Where(x => x.EnderecoId == EnderecoId).SingleOrDefault();
-                session.Close();
-
-                return endereco;
+                return session.QueryOver<Endereco>().Where(x => x.EnderecoId == EnderecoId).SingleOrDefault();
             }
             catch (Exception)
             {
@@ -42,7 +41,7 @@ namespace Common.DBServices
             }
         }
 
-        public static Guid SalvarEndereco(Endereco endereco)
+        public Guid SalvarEndereco(Endereco endereco)
         {
             try
             {
@@ -58,19 +57,15 @@ namespace Common.DBServices
                     }
                     else
                     {
-                        ISession session = NHibernateFactory.CreateSessionGeral().OpenSession();
                         session.SaveOrUpdate(endereco);
                         session.Flush();
-                        session.Close();
 
                         return endereco.EnderecoId;
                     }
                 }
                 else
                 {
-                    ISession session = NHibernateFactory.CreateSessionGeral().OpenSession();
                     session.SaveOrUpdate(endereco);
-                    session.Close();
 
                     return endereco.EnderecoId;
                 }
@@ -78,6 +73,14 @@ namespace Common.DBServices
             catch (Exception)
             {
                 return Guid.Empty;
+            }
+        }
+
+        public void Dispose()
+        {
+            if(session != null)
+            {
+                session.Close();
             }
         }
     }

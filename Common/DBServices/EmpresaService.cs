@@ -8,16 +8,22 @@ using System.Threading.Tasks;
 
 namespace Common.DBServices
 {
-    public abstract class EmpresaService
+    public class EmpresaService : IDisposable
     {
-        public static bool SalvarEmpresa(Empresa Empresa)
+        private ISession session;
+
+        public EmpresaService OpenSession()
+        {
+            session = NHibernateFactory.GetSessionFactoryGeral().OpenSession();
+            return this;
+        }
+
+        public bool SalvarEmpresa(Empresa Empresa)
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionGeral().OpenSession();
                 session.SaveOrUpdate(Empresa);
                 session.Flush();
-                session.Close();
 
                 return true;
             }
@@ -27,15 +33,11 @@ namespace Common.DBServices
             }
         }
 
-        public static IEnumerable<Empresa> ObterTodasEmpresas()
+        public IEnumerable<Empresa> ObterTodasEmpresas()
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionGeral().OpenSession();
-                var empresas = session.QueryOver<Empresa>().List();
-                session.Close();
-
-                return empresas;
+                return session.QueryOver<Empresa>().List();
             }
             catch (Exception)
             {
@@ -43,19 +45,23 @@ namespace Common.DBServices
             }
         }
 
-        public static Empresa ObterPorId(Guid EmpresaId)
+        public Empresa ObterPorId(Guid EmpresaId)
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionGeral().OpenSession();
-                var empresa = session.QueryOver<Empresa>().Where(x => x.EmpresaId.Equals(EmpresaId)).SingleOrDefault();
-                session.Close();
-
-                return empresa;
+                return session.QueryOver<Empresa>().Where(x => x.EmpresaId.Equals(EmpresaId)).SingleOrDefault();
             }
             catch (Exception)
             {
                 return null;
+            }
+        }
+
+        public void Dispose()
+        {
+            if(session != null)
+            {
+                session.Close();
             }
         }
     }

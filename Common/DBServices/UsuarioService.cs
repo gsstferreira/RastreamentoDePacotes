@@ -8,17 +8,20 @@ using System.Threading.Tasks;
 
 namespace Common.DBServices
 {
-    public abstract class UsuarioService
+    public class UsuarioService : IDisposable
     {
-        public static IEnumerable<Usuario> ObterTodosUsuarios()
+        private ISession session;
+
+        public UsuarioService OpenSession()
+        {
+            session = NHibernateFactory.GetSessionFactoryGeral().OpenSession();
+            return this;
+        }
+        public IEnumerable<Usuario> ObterTodosUsuarios()
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionGeral().OpenSession();
-                var pacotes = session.QueryOver<Usuario>().List();
-                session.Close();
-
-                return pacotes;
+                return session.QueryOver<Usuario>().List();
             }
             catch (Exception)
             {
@@ -26,15 +29,11 @@ namespace Common.DBServices
             }
         }
 
-        public static Usuario ObterPorId(Guid UsuarioId)
+        public Usuario ObterPorId(Guid UsuarioId)
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionGeral().OpenSession();
-                var user = session.QueryOver<Usuario>().Where(x => x.UsuarioId == UsuarioId).SingleOrDefault();
-                session.Close();
-
-                return user;
+                return session.QueryOver<Usuario>().Where(x => x.UsuarioId == UsuarioId).SingleOrDefault();
             }
             catch (Exception)
             {
@@ -42,15 +41,11 @@ namespace Common.DBServices
             }
         }
 
-        public static Usuario ObterPorEmail(string email)
+        public Usuario ObterPorEmail(string email)
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionGeral().OpenSession();
-                var user = session.QueryOver<Usuario>().Where(x => x.Email.Equals(email)).SingleOrDefault();
-                session.Close();
-
-                return user;
+                return session.QueryOver<Usuario>().Where(x => x.Email == email).SingleOrDefault();
             }
             catch (Exception)
             {
@@ -58,20 +53,26 @@ namespace Common.DBServices
             }
         }
 
-        public static bool SalvarUsuario(Usuario user)
+        public bool SalvarUsuario(Usuario user)
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionGeral().OpenSession();
                 session.SaveOrUpdate(user);
                 session.Flush();
-                session.Close();
 
                 return true;
             }
             catch (Exception)
             {
                 return false;
+            }
+        }
+
+        public void Dispose()
+        {
+            if (session != null)
+            {
+                session.Close();
             }
         }
     }

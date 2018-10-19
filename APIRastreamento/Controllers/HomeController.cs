@@ -10,15 +10,15 @@ using System.Web.Mvc;
 
 namespace APIRastreamento.Controllers
 {
-    public class HomeController : BaseController 
+    public class HomeController : Controller 
     {
         [AllowAnonymous]
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
 
-            PacoteService.ObterTodosPacotes();
-            EstacaoService.ObterTodasEstacoes();
+            new PacoteService().OpenSession().ObterTodosPacotes();
+            new EstacaoService().OpenSession().ObterTodasEstacoes();
 
             return View();
         }

@@ -5,17 +5,21 @@ using System.Collections.Generic;
 
 namespace Common.DBServices
 {
-    public abstract class RotaService
+    public class RotaService : IDisposable
     {
-        public static IEnumerable<Rota> ObterTodasRotas()
+        private ISession session;
+
+        public RotaService OpenSession()
+        {
+            session = NHibernateFactory.GetSessionFactoryPacote().OpenSession();
+            return this;
+        }
+
+        public IEnumerable<Rota> ObterTodasRotas()
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionPacote().OpenSession();
-                var itens = session.QueryOver<Rota>().List();
-                session.Close();
-
-                return itens;
+                return session.QueryOver<Rota>().List();
             }
             catch (Exception)
             {
@@ -23,17 +27,14 @@ namespace Common.DBServices
             }
         }
 
-        public static bool SalvarRota(Rota rota)
+        public bool SalvarRota(Rota rota)
         {
             try
             {
-                ISession sessionPacote = NHibernateFactory.CreateSessionPacote().OpenSession();
-                sessionPacote.SaveOrUpdate(rota);
-                sessionPacote.Flush();
-                sessionPacote.Close();
+                session.SaveOrUpdate(rota);
+                session.Flush();
 
                 return true;
-
             }
             catch (Exception)
             {
@@ -41,20 +42,23 @@ namespace Common.DBServices
             }
         }
 
-        public static Rota ObterPorId(Guid RotaId)
+        public Rota ObterPorId(Guid RotaId)
         {
             try
             {
-                ISession session = NHibernateFactory.CreateSessionPacote().OpenSession();
-                var rota = session.QueryOver<Rota>().Where(x => x.RotaId == RotaId).SingleOrDefault();
-
-                session.Close();
-
-                return rota;
+                return session.QueryOver<Rota>().Where(x => x.RotaId == RotaId).SingleOrDefault();
             }
             catch (Exception)
             {
                 return null;
+            }
+        }
+
+        public void Dispose()
+        {
+            if (session != null)
+            {
+                session.Close();
             }
         }
     }

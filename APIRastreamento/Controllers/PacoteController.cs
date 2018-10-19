@@ -10,17 +10,34 @@ using System.Web.Mvc;
 
 namespace APIRastreamento.Controllers
 {
-    public class PacoteController : BaseController
+    public class PacoteController : BaseApiController
     {
+
+        public PacoteController() : base()
+        {
+            _pacoteService.OpenSession();
+        }
+
         [HttpGet]
         public string ObterPacotesAtivos()
         {
             var resp = new RespostaHttp();
-            var user = CheckUser(Request);
 
             try
             {
-                var pacotes = PacoteService.ObterPorDestinatario(user.UsuarioId).Where(x => !x.Entregue).ToList();
+                var pacotes = _pacoteService.ObterPorDestinatario(_user.UsuarioId).Where(x => !x.Entregue).ToList();
+
+                //foreach(var pac in pacotes)
+                //{
+                //    foreach(var rot in pac.Rotas)
+                //    {
+                //        rot.Pacotes.Clear();
+                //        foreach(var loc in rot.AmostrasLocalizacao)
+                //        {
+                //            loc.Rota = null;
+                //        }
+                //    }
+                //}
 
                 resp.Ok = true;
                 resp.Mensagem = pacotes;
@@ -28,12 +45,11 @@ namespace APIRastreamento.Controllers
             }
             catch(Exception)
             {
-
                 resp.Ok = false;
                 resp.Mensagem = "Ocorreu um erro ao processar a requisição. (500)";
             }
 
-            return serializer.Serialize(resp);
+            return Serialize(resp);
         }
 
         [HttpGet]
@@ -41,11 +57,10 @@ namespace APIRastreamento.Controllers
         {
 
             var resp = new RespostaHttp();
-            var user = CheckUser(Request);
 
             try
             {
-                var pacotes = PacoteService.ObterPorDestinatario(user.UsuarioId).Where(x => x.Entregue);
+                var pacotes = _pacoteService.ObterPorDestinatario(_user.UsuarioId).Where(x => x.Entregue);
 
                 resp.Ok = true;
                 resp.Mensagem = pacotes;
@@ -57,7 +72,7 @@ namespace APIRastreamento.Controllers
                 resp.Mensagem = "Ocorreu um erro ao processar a requisição. (500)";
             }
 
-            return serializer.Serialize(resp);
+            return Serialize(resp);
         }
 
         [HttpPost]
@@ -65,22 +80,19 @@ namespace APIRastreamento.Controllers
         {
             RespostaHttp resp = new RespostaHttp();
 
-            var user = CheckUser(Request);
-            var obj = RequestReaderService.ReadRequestBody(Request);
-
             try
             {
-                Guid pacoteId = obj.GetValueAs<Guid>("PacoteId");
+                Guid pacoteId = _requestBody.GetValueAs<Guid>("PacoteId");
 
-                var pacote = PacoteService.ObterPorId(pacoteId);
+                var pacote = _pacoteService.ObterPorId(pacoteId);
 
                 if(pacote != null)
                 {
                     if(pacote.DestinatarioId == Guid.Empty)
                     {
-                        pacote.DestinatarioId = user.UsuarioId;
+                        pacote.DestinatarioId = _user.UsuarioId;
 
-                        PacoteService.SalvarPacote(pacote);
+                        _pacoteService.SalvarPacote(pacote);
 
                         resp.Ok = true;
                         resp.Mensagem = "Pacote associado com sucesso. (200)";
@@ -103,34 +115,7 @@ namespace APIRastreamento.Controllers
                 resp.Mensagem = "Ocorreu um erro ao processar a requisição. (500)";
             }
 
-            return serializer.Serialize(resp);
-        }
-
-
-        // Métodos Auxiliares
-        private Usuario CheckUser(HttpRequestBase request)
-        {
-            Usuario user;
-
-            try
-            {
-                Guid id = new Guid(request.Headers.Get("Authorization"));
-
-                user = UsuarioService.ObterPorId(id);
-            }
-            catch(Exception)
-            {
-                user = null;
-            }
-
-            if(user != null)
-            {
-                return user;
-            }
-            else
-            {
-                throw new UnauthorizedAccessException();
-            }
+            return Serialize(resp);
         }
     }
 }

@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Common.Models
 {
@@ -14,6 +12,7 @@ namespace Common.Models
         public virtual DateTime DataFim { get; set; }
         public virtual Guid Origem { get; set; }
         public virtual Guid Destino { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Pacote> Pacotes { get; set; }
         public virtual ICollection<Localizacao> AmostrasLocalizacao { get; set; }
     }
