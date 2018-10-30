@@ -49,7 +49,7 @@ namespace Common.DBServices
         {
             try
             {
-                return session.QueryOver<Empresa>().Where(x => x.EmpresaId.Equals(EmpresaId)).SingleOrDefault();
+                return session.QueryOver<Empresa>().Where(x => x.EmpresaId == EmpresaId).SingleOrDefault();
             }
             catch (Exception)
             {

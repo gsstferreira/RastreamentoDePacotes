@@ -16,10 +16,6 @@ namespace APIRastreamento.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-
-            new PacoteService().OpenSession().ObterTodosPacotes();
-            new EstacaoService().OpenSession().ObterTodasEstacoes();
-
             return View();
         }
     }

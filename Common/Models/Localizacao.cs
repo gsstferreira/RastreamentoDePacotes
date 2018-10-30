@@ -5,6 +5,7 @@ namespace Common.Models
 {
     public class Localizacao
     {
+        [JsonIgnore]
         public virtual Guid LocalizacaoId { get; set; }
         [JsonIgnore]
         public virtual Rota Rota { get; set; }

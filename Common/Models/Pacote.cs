@@ -10,10 +10,12 @@ namespace Common.Models
     {
         public virtual Guid PacoteId { get; set; }
         public virtual string TagRFID { get; set; }
+        public virtual string Codigo { get; set; }
         public virtual Guid Remetente { get; set; }
         public virtual Guid DestinatarioId { get; set; }
         public virtual string Destinatario { get; set; }
         public virtual ICollection<Rota> Rotas { get; set; }
+        public virtual ICollection<Item> Conteudo { get; set; }
         public virtual DateTime DataPostagem { get; set; }
         public virtual Guid Destino { get; set; }
         public virtual bool Entregue { get; set; }

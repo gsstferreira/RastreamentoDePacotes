@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace Common.Models
 {
     public class Endereco
     {
+        [JsonIgnore]
         public virtual Guid EnderecoId { get; set; }
         public virtual string Logradouro { get; set; }
         public virtual string Numero { get; set; }

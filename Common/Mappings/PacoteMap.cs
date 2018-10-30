@@ -1,9 +1,5 @@
 ﻿using Common.Models;
 using FluentNHibernate.Mapping;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Common.Mappings
 {
@@ -13,6 +9,7 @@ namespace Common.Mappings
         {
             Id(x => x.PacoteId).GeneratedBy.GuidComb();
             Map(x => x.TagRFID);
+            Map(x => x.Codigo);
             Map(x => x.DataPostagem);
             Map(x => x.Destinatario);
             Map(x => x.DestinatarioId);
@@ -24,8 +21,17 @@ namespace Common.Mappings
                 .Table("RotasPacote")
                 .ParentKeyColumn("PacoteId")
                 .ChildKeyColumn("RotaId")
-                .Not.LazyLoad()
                 .Inverse()
+                .Cascade.None();
+
+            HasMany(x => x.Conteudo)
+                .Table("ConteudoPacote")
+                .KeyColumn("PacoteId")
+                .Component(y =>
+                {
+                    y.Map(z => z.Descricao);
+                    y.Map(z => z.Quantidade);
+                })
                 .Cascade.None();
         }
     }

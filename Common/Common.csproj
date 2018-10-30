@@ -95,6 +95,7 @@
     <Compile Include="Models\Empresa.cs" />
     <Compile Include="Models\Endereco.cs" />
     <Compile Include="Models\Estacao.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Models\LatLng.cs" />
     <Compile Include="Models\Localizacao.cs" />
     <Compile Include="Models\Pacote.cs" />

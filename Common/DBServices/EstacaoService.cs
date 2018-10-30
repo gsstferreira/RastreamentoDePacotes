@@ -2,9 +2,6 @@
 using NHibernate;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Common.DBServices
 {
@@ -49,7 +46,7 @@ namespace Common.DBServices
         {
             try
             {
-                return session.QueryOver<Estacao>().Where(x => x.EstacaoId.Equals(EstacaoId)).SingleOrDefault();
+                return session.QueryOver<Estacao>().Where(x => x.EstacaoId == EstacaoId).SingleOrDefault();
             }
             catch (Exception)
             {

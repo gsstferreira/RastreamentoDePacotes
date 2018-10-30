@@ -62,13 +62,25 @@ namespace Common.DBServices
             }
         }
 
-        public Pacote ObterPorTag(Guid TagRFID)
+        public Pacote ObterPorTag(string TagRFID)
         {
             try
             {
-                return session.QueryOver<Pacote>().Where(x => x.TagRFID.Equals(TagRFID)).SingleOrDefault();
+                return session.QueryOver<Pacote>().Where(x => x.TagRFID == TagRFID).SingleOrDefault();
             }
             catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public Pacote ObterPorCodigo(string Codigo)
+        {
+            try
+            {
+                return session.QueryOver<Pacote>().Where(x => x.Codigo == Codigo).SingleOrDefault();
+            }
+            catch(Exception)
             {
                 return null;
             }
