@@ -49,7 +49,7 @@ namespace Common.DBServices
                 {
                     var enderecoSimilar = ObterTodosEnderecos().Where(x => x.Latitude == endereco.Latitude)
                         .Where(x => x.Longitude == endereco.Longitude)
-                        .Where(x => x.Complemento.Equals(endereco.Complemento)).FirstOrDefault();
+                        .Where(x => x.Complemento == endereco.Complemento).FirstOrDefault();
 
                     if(enderecoSimilar != null)
                     {
@@ -65,6 +65,11 @@ namespace Common.DBServices
                 }
                 else
                 {
+                    if (endereco.Complemento == null)
+                    {
+                        endereco.Complemento = "";
+                    }
+
                     session.SaveOrUpdate(endereco);
 
                     return endereco.EnderecoId;

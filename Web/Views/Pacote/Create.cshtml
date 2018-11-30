@@ -1,0 +1,144 @@
+﻿@model Web.ViewModels.PacoteViewModel
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Cadastrar Pacote</title>
+</head>
+<body>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Pacotes</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Cadastrar Pacotes
+                    </div>
+                    <div class="panel-body">
+                        @using (Html.BeginForm("Create", "Pacote", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.TagRfid)
+                                        <br />
+                                        <div style="color:red">  @Html.ValidationMessageFor(x => Model.TagRfid)</div>
+                                        @Html.EditorFor(x => Model.TagRfid, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Destinatario)
+                                        <br />
+                                        <div style="color:red">@Html.ValidationMessageFor(x => Model.Destinatario)</div>
+                                        @Html.EditorFor(x => Model.Destinatario, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Destino.Logradouro)
+                                        <br />
+                                        <div style="color:red">@Html.ValidationMessageFor(x => Model.Destino.Logradouro)</div>
+                                        @Html.EditorFor(x => Model.Destino.Logradouro, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Destino.Numero)
+                                        <br />
+                                        <div style="color:red">@Html.ValidationMessageFor(x => Model.Destino.Numero)</div>
+                                        @Html.EditorFor(x => Model.Destino.Numero, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Destino.Complemento)
+                                        <br />
+                                        <div style="color:red">@Html.ValidationMessageFor(x => Model.Destino.Complemento)</div>
+                                        @Html.EditorFor(x => Model.Destino.Complemento, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Destino.Bairro)
+                                        <br />
+                                        <div style="color:red">@Html.ValidationMessageFor(x => Model.Destino.Bairro)</div>
+                                        @Html.EditorFor(x => Model.Destino.Bairro, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Destino.Cep)
+                                        <br />
+                                        <div style="color:red">@Html.ValidationMessageFor(x => Model.Destino.Cep)</div>
+                                        @Html.EditorFor(x => Model.Destino.Cep, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Destino.Municipio)
+                                        <br />
+                                        <div style="color:red">@Html.ValidationMessageFor(x => Model.Destino.Municipio)</div>
+                                        @Html.EditorFor(x => Model.Destino.Municipio, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Destino.Estado)
+                                        <br />
+                                        <div style="color:red">@Html.ValidationMessageFor(x => Model.Destino.Estado)</div>
+                                        @Html.EditorFor(x => Model.Destino.Estado, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Destino.Pais)
+                                        <br />
+                                        <div style="color:red">@Html.ValidationMessageFor(x => Model.Destino.Pais)</div>
+                                        @Html.EditorFor(x => Model.Destino.Pais, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

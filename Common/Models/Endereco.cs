@@ -9,6 +9,7 @@ namespace Common.Models
 {
     public class Endereco
     {
+
         [JsonIgnore]
         public virtual Guid EnderecoId { get; set; }
         public virtual string Logradouro { get; set; }

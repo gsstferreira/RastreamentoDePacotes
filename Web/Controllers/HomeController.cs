@@ -2,7 +2,7 @@
 using System;
 using System.Web.Mvc;
 
-namespace AplicacaoArduino.Controllers
+namespace Web.Controllers
 {
     public class HomeController : Controller
     {

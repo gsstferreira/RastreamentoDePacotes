@@ -1,6 +1,6 @@
 using System;
 
-namespace AplicacaoArduino.Areas.HelpPage.ModelDescriptions
+namespace Web.Areas.HelpPage.ModelDescriptions
 {
     public class ParameterAnnotation
     {

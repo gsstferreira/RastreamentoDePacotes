@@ -27,6 +27,7 @@ namespace Common.DBServices
                     .Add<VeiculoMap>()
                     .Add<EmpresaMap>()
                     .Add<EstacaoMap>()
+                    .Add<OcorrenciaMap>()
                 );
 
 

@@ -8,15 +8,17 @@ using System.Threading.Tasks;
 
 namespace Common.Mappings
 {
-    public class EmpresaMap : ClassMap<Empresa>
+    public class OcorrenciaMap : ClassMap<Ocorrencia>
     {
-        public EmpresaMap()
+        public OcorrenciaMap()
         {
-            Id(x => x.EmpresaId).GeneratedBy.GuidComb();
-            Map(x => x.Cnpj);
-            Map(x => x.NomeEmpresa);
-            Map(x => x.Senha);
-            Map(x => x.DataCadastro);
+            Id(x => x.OcorrenciaId).GeneratedBy.GuidComb();
+            Map(x => x.Pacote);
+            Map(x => x.TipoOCorrencia);
+            Map(x => x.Descricao);
+            Map(x => x.Data);
+            Map(x => x.Resolvido);
+            Map(x => x.Finalizado);
         }
     }
 }

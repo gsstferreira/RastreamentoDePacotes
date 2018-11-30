@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="DBServices\OcorrenciaService.cs" />
     <Compile Include="DBServices\EmpresaService.cs" />
     <Compile Include="DBServices\EnderecoService.cs" />
     <Compile Include="DBServices\VeiculoService.cs" />

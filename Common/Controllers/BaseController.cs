@@ -21,10 +21,10 @@ namespace Common.Controllers
         protected readonly RotaService _rotaService;
         protected readonly UsuarioService _usuarioService;
         protected readonly VeiculoService _veiculoService;
+        protected readonly OcorrenciaService _ocorrenciaService;
 
         public BaseApiController()
         {
-
             _empresaService = new EmpresaService();
             _enderecoService = new EnderecoService();
             _estacaoService = new EstacaoService();
@@ -32,6 +32,7 @@ namespace Common.Controllers
             _pacoteService = new PacoteService();
             _rotaService = new RotaService();
             _veiculoService = new VeiculoService();
+            _ocorrenciaService = new OcorrenciaService();
 
             _usuarioService = new UsuarioService().OpenSession();
         }
@@ -93,6 +94,7 @@ namespace Common.Controllers
             _rotaService.Dispose();
             _usuarioService.Dispose();
             _veiculoService.Dispose();
+            _ocorrenciaService.Dispose();
 
             _requestBody = null;
             _user = null;
