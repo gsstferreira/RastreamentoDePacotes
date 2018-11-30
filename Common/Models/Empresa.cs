@@ -13,6 +13,5 @@ namespace Common.Models
         public virtual string Cnpj { get; set; }
         public virtual string Senha { get; set; }
         public virtual DateTime DataCadastro { get; set; }
-        public virtual List<Pacote> Pacotes { get; set; }
     }
 }

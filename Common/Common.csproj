@@ -84,6 +84,7 @@
     <Compile Include="DBServices\PacoteService.cs" />
     <Compile Include="DBServices\RotaService.cs" />
     <Compile Include="DBServices\UsuarioService.cs" />
+    <Compile Include="Mappings\OcorrenciaMap.cs" />
     <Compile Include="Mappings\EmpresaMap.cs" />
     <Compile Include="Mappings\EnderecoMap.cs" />
     <Compile Include="Mappings\EstacaoMap.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\LatLng.cs" />
     <Compile Include="Models\Localizacao.cs" />
+    <Compile Include="Models\Ocorrencia.cs" />
     <Compile Include="Models\Pacote.cs" />
     <Compile Include="Models\RespostaHttp.cs" />
     <Compile Include="Models\Rota.cs" />
