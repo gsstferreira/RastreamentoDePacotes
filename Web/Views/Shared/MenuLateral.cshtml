@@ -17,13 +17,26 @@
                 </ul>
             </li>
             <li>
-                <a href="forms.html"><i class="fa fa-home fa-fw"></i> Estações</a>
+                <a href="#"><i class="fa fa-truck fa-fw"></i> Rotas<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="@Url.Action("Index","Rota","")">Lista de Rotas</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Create","Rota","")l">Cadastrar Rota</a>
+                    </li>
+                </ul>
             </li>
             <li>
-                <a href="forms.html"><i class="fa fa-truck fa-fw"></i> Veículos</a>
-            </li>
-            <li>
-                <a href="forms.html"><i class="fa fa-group fa-fw"></i> Motoristas</a>
+                <a href="#"><i class="fa fa-truck fa-fw"></i> Estações<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="@Url.Action("Index","Estacao","")">Lista de Estações</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Create","Estacao","")l">Cadastrar Estação</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>

@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Web.ViewModels.RotaViewModel>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Rotas</title>
+</head>
+<body>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Rotas</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Lista de Rotas
+                    </div>
+                    <div class="panel-body">
+                        <table width="100%" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Limpar</th>
+                                    <th>Origem</th>
+                                    <th>Destino</th>
+                                    <th>Veículo</th>
+                                    <th>Data Início</th>
+                                    <th>Data Fim</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var p in Model)
+                                {
+                                    var a = p.Origem.Endereco;
+                                    var a1 = p.Destino.Endereco;
+                                <tr>
+                                    <td><a href="@Url.Action("Reset","Rota",new { rotaId = p.RotaId })">Limpar Rota</a></td>
+                                    <td>@String.Format("{0}, {1}", a.Logradouro, a.Numero)<br />@String.Format("{0}, {1}", a.Bairro, a.Municipio)</td>
+                                    <td>@String.Format("{0}, {1}", a1.Logradouro, a1.Numero)<br />@String.Format("{0}, {1}", a1.Bairro, a1.Municipio)</td>
+                                    <td>@Html.DisplayFor(x => p.Veiculo.Modelo)</td>
+                                    <td>@Html.DisplayFor(x => p.DataInicio)</td>
+
+                                    @if (p.DataFim.CompareTo(p.DataInicio) > 0)
+                                    {
+                                        <td>@Html.DisplayFor(x => p.DataFim)</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Em andamento</td>
+                                    }
+                                    <td>
+                                        <a href="@Url.Action("Detalhes","Rota",new { rota = p.RotaId })">Ver detalhes</a>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

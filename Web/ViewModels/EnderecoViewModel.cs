@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace AplicacaoArduino.ViewModels
+namespace Web.ViewModels
 {
     public class EnderecoViewModel
     {

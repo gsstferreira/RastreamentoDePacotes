@@ -175,6 +175,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\LocalizacaoQuery.cs" />
     <Compile Include="Models\RespostaPacote.cs" />
     <Compile Include="Models\RespostaRota.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,0 +1,76 @@
+﻿@model Web.ViewModels.NovaRotaViewModel
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Agendar Rota</title>
+</head>
+<body>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Agendar Rota</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Nova Rota
+                    </div>
+                    <div class="panel-body">
+                        @using (Html.BeginForm("Create", "Rota", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Origem)
+                                        <br />
+                                        <div style="color:red">  @Html.ValidationMessageFor(x => Model.Origem)</div>
+                                        @Html.DropDownListFor(x => Model.Origem,Model.Estacoes, new { @class = "form-control" } )
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Destino)
+                                        <br />
+                                        <div style="color:red">  @Html.ValidationMessageFor(x => Model.Destino)</div>
+                                        @Html.DropDownListFor(x => Model.Destino, Model.Estacoes, new { @class = "form-control" } )
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Veiculo)
+                                        <br />
+                                        <div style="color:red">  @Html.ValidationMessageFor(x => Model.Veiculo)</div>
+                                        @Html.DropDownListFor(x => Model.Veiculo, Model.Veiculos, new { @class = "form-control" } )
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.DataInicio)
+                                        <br />
+                                        <div style="color:red">@Html.ValidationMessageFor(x => Model.DataInicio)</div>
+                                        @Html.EditorFor(x => Model.DataInicio, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

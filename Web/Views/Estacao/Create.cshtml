@@ -1,0 +1,122 @@
+﻿@model Web.ViewModels.EnderecoViewModel
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Cadastrar Estação</title>
+</head>
+<body>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Estações</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Cadastrar Estações
+                    </div>
+                    <div class="panel-body">
+                        @using (Html.BeginForm("Create", "Estacao", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Logradouro)
+                                        <br />
+                                        <div style="color:red">@Html.ValidationMessageFor(x => Model.Logradouro)</div>
+                                        @Html.EditorFor(x => Model.Logradouro, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Numero)
+                                        <br />
+                                        <div style="color:red">@Html.ValidationMessageFor(x => Model.Numero)</div>
+                                        @Html.EditorFor(x => Model.Numero, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Complemento)
+                                        <br />
+                                        <div style="color:red">@Html.ValidationMessageFor(x => Model.Complemento)</div>
+                                        @Html.EditorFor(x => Model.Complemento, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Bairro)
+                                        <br />
+                                        <div style="color:red">@Html.ValidationMessageFor(x => Model.Bairro)</div>
+                                        @Html.EditorFor(x => Model.Bairro, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Cep)
+                                        <br />
+                                        <div style="color:red">@Html.ValidationMessageFor(x => Model.Cep)</div>
+                                        @Html.EditorFor(x => Model.Cep, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Municipio)
+                                        <br />
+                                        <div style="color:red">@Html.ValidationMessageFor(x => Model.Municipio)</div>
+                                        @Html.EditorFor(x => Model.Municipio, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Estado)
+                                        <br />
+                                        <div style="color:red">@Html.ValidationMessageFor(x => Model.Estado)</div>
+                                        @Html.EditorFor(x => Model.Estado, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        @Html.LabelFor(x => Model.Pais)
+                                        <br />
+                                        <div style="color:red">@Html.ValidationMessageFor(x => Model.Pais)</div>
+                                        @Html.EditorFor(x => Model.Pais, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

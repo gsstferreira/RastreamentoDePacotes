@@ -1,0 +1,94 @@
+﻿@model Web.ViewModels.RotaViewModel
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            #map {
+                height: 600px;
+            }
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Detalhes da Rota</title>
+    </head>
+    <body>
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Detalhes da Rota</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Detalhes
+                        </div>
+                        <div class="panel-body">
+                            <div id="map"></div>
+                            <script>
+                                var map;
+                                function initMap() {
+
+
+                                    @{
+                                        var latC = ((Model.Origem.Endereco.Latitude + Model.Destino.Endereco.Latitude) / 2.0).ToString().Replace(",",".");
+                                        var lngC = ((Model.Origem.Endereco.Longitude + Model.Destino.Endereco.Longitude) / 2.0).ToString().Replace(",", ".");
+
+                                        var latOrigem = Model.Origem.Endereco.Latitude.ToString().Replace(",", ".");
+                                        var lngOrigem = Model.Origem.Endereco.Longitude.ToString().Replace(",", ".");
+
+                                        var latDestino = Model.Destino.Endereco.Latitude.ToString().Replace(",", ".");
+                                        var lngDestino = Model.Destino.Endereco.Longitude.ToString().Replace(",", ".");
+                                    }
+
+                                    map = new google.maps.Map(document.getElementById('map'), {
+                                        center: { lat: @latC, lng: @lngC },
+                                        zoom: 14
+                                    });
+
+                                    @*var polyline = new google.maps.Polyline({
+                                        path: @Html.Raw(Json.Encode(Model.AmostrasVetor)),
+                                        geodesic: true,
+                                        strokeColor: '#FF0000',
+                                        strokeOpacity: 1.0,
+                                        strokeWeight: 2
+                                    });*@
+
+                                    var image = 'https://upload.wikimedia.org/wikipedia/commons/c/c1/Steam_Logo.png';
+                                    var markerOrigem = new google.maps.Marker({
+                                        position: { lat: @latOrigem, lng: @lngOrigem },
+                                        map: map,
+                                        title: 'Origem',
+                                        label: 'O'
+                                    });
+
+                                    var markerDestino = new google.maps.Marker({
+                                        position: { lat: @latDestino, lng: @lngDestino },
+                                        map: map,
+                                        title: 'Destino',
+                                        label: 'D'
+                                    });
+
+                                    //polyline.setMap(map);
+
+                                }
+                            </script>
+                            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLZI5N0ja40O0Ix18QdbULbBMF3ViwxDk&callback=initMap" async defer></script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

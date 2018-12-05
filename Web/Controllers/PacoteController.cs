@@ -1,4 +1,4 @@
-﻿using AplicacaoArduino.ViewModels;
+﻿using Common.Controllers;
 using Common.DBServices;
 using Common.Models;
 using Common.Services;
@@ -11,18 +11,15 @@ using Web.ViewModels;
 
 namespace Web.Controllers
 {
-    public class PacoteController : Controller
+    public class PacoteController : BaseWebController
     {
 
-        private readonly PacoteService _pacoteService;
-        private readonly EmpresaService _empresaService;
-        private readonly EnderecoService _enderecoService;
 
         public PacoteController():base()
         {
-            _pacoteService = new PacoteService().OpenSession();
-            _empresaService = new EmpresaService().OpenSession();
-            _enderecoService = new EnderecoService().OpenSession();
+            _pacoteService.OpenSession();
+            _empresaService.OpenSession();
+            _enderecoService.OpenSession();
         }
 
         // GET: Pacote

@@ -1,4 +1,5 @@
 ﻿using Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -38,6 +39,19 @@ namespace Common.Services
             }
 
             return new LatLng();
+        }
+
+        public static double Haversine(double lat1, double lng1, double lat2, double lng2)
+        {
+            int raioTerra = 6371000;
+            double pi = Math.PI;
+
+            double rlat1 = (90 - lat1) * pi / 180;
+            double rlat2 = (90 - lat2) * pi / 180;
+            double deltaLng = (lng1 - lng2) * pi / 180;
+
+
+            return raioTerra * (Math.Acos(Math.Cos(rlat1) * Math.Cos(rlat2) + Math.Sin(rlat1) * Math.Sin(rlat2) * Math.Cos(deltaLng)));
         }
 
         private class GeocodingResponse
